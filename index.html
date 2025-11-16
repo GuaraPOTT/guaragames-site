@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guará Games</title>
+
+    <link rel="icon" type="image/png" href="Images/GG3.png">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <button class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="logo-area">
+        <img src="Images/GG1.png" alt="Logo Guará Games" class="logo">
+        <span class="brand-name">GUARÁ GAMES</span>
+    </div>
+
+    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+
+    <!-- MENU LATERAL -->
+    <nav id="side-menu" class="side-menu">
+        <a href="index.html">Início</a>
+        <a href="jogos.html">Jogos</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="contato.html">Contato</a>
+    </nav>
+</header>
+
+<main>
+    <section class="hero">
+    <h4>Seja bem vindo ao site oficial da sua desenvolvedora de jogos favorita!
+         Fique ligado nas novidades e qualquer conteúdo extra por aqui.</h4>   
+    <h2>ÚLTIMAS NOTÍCIAS</h2>
+
+    <div class="carousel">
+        <button class="arrow left" onclick="prevSlide()">&#10094;</button>
+
+        <img src="Images/ArtePromo1.jpg" class="active">
+        <img src="Images/Nubankojima.jpg">
+        <img src="Images/MuralGG.jpg">
+        <img src="Images/CaramelPictures.jpg">
+
+        <button class="arrow right" onclick="nextSlide()">&#10095;</button>
+    </div>
+
+    <!-- Indicadores -->
+    <div class="dots"></div>
+
+    <p class="descricao">
+        Criamos experiências imersivas, emocionantes e inesquecíveis para jogadores de todas as plataformas.
+    </p>
+</section>
+
+    <section class="guides">
+        <h3>Mais Conteúdos</h3>
+
+        <div class="cards">
+            <div class="card">
+                <h4>Próximos Lançamentos</h4>
+                <p>Saiba tudo sobre os novos títulos em desenvolvimento.</p>
+            </div>
+
+            <div class="card">
+                <h4>Devlogs</h4>
+                <p>Acompanhe o processo de criação dos nossos jogos.</p>
+            </div>
+
+            <div class="card">
+                <h4>Suporte</h4>
+                <p>Encontre ajuda e tire dúvidas sobre nossos produtos.</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="footer-container">
+
+        <div class="footer-section">
+            <h4>Contato</h4>
+            <p>Suporte: suporte@guaragames.com</p>
+            <p>Contato: guaragames@ggdev.com</p>
+            <p>Telefone: (22) 94002-8922</p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Redes Sociais</h4>
+
+            <a href="https://twitter.com/ggstudios" target="_blank" class="social">
+                <i class="bi bi-twitter-x"></i> GGstudios_
+            </a>
+
+            <a href="https://instagram.com/guara_games" target="_blank" class="social">
+                <i class="bi bi-instagram"></i> Guará_GamesGG
+            </a>
+
+            <a href="https://www.youtube.com/@MathMBR" target="_blank" class="social">
+                <i class="bi bi-youtube"></i> Guará Games
+            </a>
+            <a href="https://discord.gg/senuj7HW" target="_blank" class="social">
+                <i class="bi bi-discord"></i> GG Server
+            </a>
+        </div>
+
+        <div class="footer-section">
+            <h4>Endereço</h4>
+            <p>Avenida Eminem, 021</p>
+            <p>Mar de Fevereiro — Aurorion</p>
+        </div>
+
+    </div>
+
+    <p class="copyright">
+        © 2025 Guará Games Studios — Todos os direitos reservados.
+    </p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
