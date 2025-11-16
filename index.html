@@ -43,31 +43,35 @@
 
 <main>
     <section class="hero">
-    <h4>Seja bem vindo ao site oficial da sua desenvolvedora de jogos favorita!
-         Fique ligado nas novidades e qualquer conteúdo extra por aqui.</h4>   
+    <div class="Introducao"> 
+    <h1> BEM VINDO!</h1>
+    <h3>Bem vindo ao site oficial da sua empresa de jogos favorita! Fique por dentro das novidades, anúncios oficiais e projetos futuros por aqui. Você também pode conhecer os nossos produtos e sobre a empresa, sinta-se em casa.<p>
+    A Guará Games marcou gerações com títulos inesquecíveis que conquistaram milhões de jogadores em todo o mundo. Hoje, seguimos com força total: modernizando nossa marca, investindo em novas tecnologias e criando experiências que unem a nostalgia dos clássicos, o carinho tradicional e a inovação da nova era dos games..</h4></div>   
     <h2>ÚLTIMAS NOTÍCIAS</h2>
 
     <div class="carousel">
-        <button class="arrow left" onclick="prevSlide()">&#10094;</button>
+        <button class="arrow left" id="arrow left" onclick="prevSlide()">&#10094;</button>
+        <button class="arrow right" id="arrow right" onclick="nextSlide()">&#10095;</button>
 
-        <img src="Images/ArtePromo1.jpg" class="active">
-        <img src="Images/Nubankojima.jpg">
-        <img src="Images/MuralGG.jpg">
-        <img src="Images/CaramelPictures.jpg">
+        <img src="Images/ArtePromo1.jpg" class="active" data-desc="MORTE VIDA SEVERINA - O maior projeto narrativo e de mundo aberto ambientado no nordeste brasileiro na época do cangaço lançará em novembro de 2025.">
+        <img src="Images/Nubankojima.jpg" data-desc="FUTURO EMPOLGANTE — Nubankojima revela planos pro futuro: Nubancharted 4 e novos projetos.">
+        <img src="Images/MuralGG.jpg" data-desc="DE CARA NOVA! — Bem-vindo ao mais novo site oficial da Guará Games!"> 
+        <img src="Images/CaramelPictures.jpg" data-desc="VIDA AOS JOGOS - Adaptações de jogos pela Caramel Pictures já são discutidos!">
 
-        <button class="arrow right" onclick="nextSlide()">&#10095;</button>
+        <div class="carousel-desc" id="carousel-desc"></div>
     </div>
 
     <!-- Indicadores -->
-    <div class="dots"></div>
+    <div class="dots" id="dots"></div>
 
     <p class="descricao">
         Criamos experiências imersivas, emocionantes e inesquecíveis para jogadores de todas as plataformas.
+Nosso objetivo é transformar cada jogo em uma jornada única, capaz de envolver o jogador desde os primeiros instantes. Trabalhamos para unir narrativa, arte e tecnologia de forma harmoniosa, criando mundos vivos e interativos onde cada detalhe importa. Seja em consoles, computadores ou dispositivos móveis, buscamos entregar diversão, emoção e profundidade, oferecendo aventuras que permanecem na memória muito depois de a partida terminar. Somos movidos pela paixão por games e pelo compromisso de proporcionar experiências que transcendem a tela e conectam pessoas através do poder do entretenimento digital.
     </p>
 </section>
 
     <section class="guides">
-        <h3>Mais Conteúdos</h3>
+        <h3>Conteúdos</h3>
 
         <div class="cards">
             <div class="card">
@@ -76,8 +80,8 @@
             </div>
 
             <div class="card">
-                <h4>Devlogs</h4>
-                <p>Acompanhe o processo de criação dos nossos jogos.</p>
+                <h4>História</h4>
+                <p>Conheça a nossa origem e nossos trabalhos.</p>
             </div>
 
             <div class="card">
