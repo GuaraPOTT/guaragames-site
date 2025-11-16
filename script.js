@@ -31,47 +31,61 @@ function toggleMenu() {
 // -----------------------------
 // CARROSSEL COMPLETO
 // -----------------------------
-let index = 0;
-const slides = document.querySelectorAll(".carousel img");
-const dotsContainer = document.querySelector(".dots");
+const images = document.querySelectorAll(".carousel img");
+const descBox = document.getElementById("carousel-desc");
+let currentIndex = 0;
 
-// Criar bolinhas dinamicamente
-slides.forEach((_, i) => {
-    const dot = document.createElement("div");
-    dot.classList.add("dot");
-    if (i === 0) dot.classList.add("active");
-
-    dot.addEventListener("click", () => goToSlide(i));
-    dotsContainer.appendChild(dot);
-});
-
-const dots = document.querySelectorAll(".dot");
-
-function updateDots() {
-    dots.forEach(dot => dot.classList.remove("active"));
-    dots[index].classList.add("active");
-}
-
-function showSlide(n) {
-    slides.forEach(slide => slide.classList.remove("active"));
-    slides[n].classList.add("active");
+// Função que atualiza imagem ativa
+function showImage(index) {
+    images.forEach(img => img.classList.remove("active"));
+    images[index].classList.add("active");
+    updateDescription();
     updateDots();
 }
 
-function nextSlide() {
-    index = (index + 1) % slides.length;
-    showSlide(index);
+// Atualiza texto da imagem ativa
+function updateDescription() {
+    const text = images[currentIndex].getAttribute("data-desc");
+    descBox.textContent = text;
 }
 
-function prevSlide() {
-    index = (index - 1 + slides.length) % slides.length;
-    showSlide(index);
+// Criar indicadores (bolinhas)
+const dotsContainer = document.getElementById("dots");
+images.forEach((_, i) => {
+    const dot = document.createElement("div");
+    dot.classList.add("dot");
+    if (i === 0) dot.classList.add("active");
+    dot.addEventListener("click", () => {
+        currentIndex = i;
+        showImage(currentIndex);
+    });
+    dotsContainer.appendChild(dot);
+});
+
+// Atualiza bolinhas
+function updateDots() {
+    const dots = document.querySelectorAll(".dot");
+    dots.forEach(dot => dot.classList.remove("active"));
+    dots[currentIndex].classList.add("active");
 }
 
-function goToSlide(n) {
-    index = n;
-    showSlide(index);
-}
+// Botão NEXT
+document.getElementById("arrow right").addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % images.length;
+    showImage(currentIndex);
+});
 
-// Passar automaticamente a cada 4s
-setInterval(nextSlide, 4000);
+// Botão PREV
+document.getElementById("arrow left").addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    showImage(currentIndex);
+});
+
+// Suporte mobile — tocar exibe a descrição
+document.querySelector(".carousel").addEventListener("click", () => {
+    document.querySelector(".carousel").classList.add("touch");
+    updateDescription();
+});
+
+// Inicializar
+showImage(0);
