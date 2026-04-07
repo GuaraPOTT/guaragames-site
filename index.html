@@ -1,0 +1,1831 @@
+<!doctype html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <title>Guará Games</title>
+  <meta name="description" content="Estúdio desenvolvedor de jogos com estética de floresta e energia neon. Conheça nossos jogos, novidades, galeria e entre em contato." />
+
+  <!-- PERSONALIZÁVEL: favicon + preview ao compartilhar -->
+  <link rel="icon" type="image/png" href="assets/images/brand/GG3.png" />
+  <meta property="og:title" content="Guará Games" />
+  <meta property="og:description" content="Estúdio desenvolvedor de jogos com estética de floresta e energia neon." />
+  <meta property="og:image" content="assets/images/brand/og-cover.jpg" />
+  <meta property="og:type" content="website" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            neon: {
+              50:  '#eafff5',
+              100: '#c8ffe7',
+              200: '#8effcf',
+              300: '#4dffb3',
+              400: '#15ff98',
+              500: '#00e07f',
+              600: '#00b865',
+              700: '#008a4b',
+              800: '#00663a',
+              900: '#00482b'
+            }
+          },
+          boxShadow: {
+            neon: '0 0 0 1px rgba(21,255,152,.35), 0 0 24px rgba(21,255,152,.18)',
+            neonStrong: '0 0 0 1px rgba(21,255,152,.55), 0 0 40px rgba(21,255,152,.22)'
+          },
+          fontFamily: {
+            display: ['ui-sans-serif', 'system-ui', 'Segoe UI', 'Inter', 'sans-serif'],
+          },
+          backgroundImage: {
+            "forest-radial": "radial-gradient(1200px 600px at 80% -10%, rgba(21,255,152,.18), transparent 60%), radial-gradient(900px 500px at 10% 20%, rgba(0,224,127,.14), transparent 55%), radial-gradient(900px 500px at 50% 100%, rgba(0,184,101,.10), transparent 50%)"
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Pattern (inline SVG) */
+    .bg-tribal {
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'%3E%3Cg fill='none' stroke='%2315ff98' stroke-opacity='.09' stroke-width='2'%3E%3Cpath d='M10 52c38-28 76-28 114 0s76 28 114 0'/%3E%3Cpath d='M10 130c38-28 76-28 114 0s76 28 114 0'/%3E%3Cpath d='M10 208c38-28 76-28 114 0s76 28 114 0'/%3E%3Cpath d='M34 10c28 38 28 76 0 114s-28 76 0 114'/%3E%3Cpath d='M130 10c28 38 28 76 0 114s-28 76 0 114'/%3E%3Cpath d='M226 10c28 38 28 76 0 114s-28 76 0 114'/%3E%3Cpath d='M74 74l18 18 18-18 18 18 18-18 18 18'/%3E%3Cpath d='M74 186l18-18 18 18 18-18 18 18 18-18 18 18'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 520px 520px;
+      background-repeat: repeat;
+      background-position: center;
+    }
+
+    /* Noise overlay */
+    .noise::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      opacity: .12;
+    }
+
+    :focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(21,255,152,.35); border-radius: .75rem; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .motion-safe\:animate-none { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
+
+    /* Routes */
+    .route-game .main-sections { display: none; }
+    .route-home #gamePage { display: none; }
+
+    /* ---------------------------------------------------------
+      LIGHT MODE CONTRAST IMPROVEMENTS (centralizado por classes)
+      - Evita ficar alterando dezenas de classes Tailwind
+    --------------------------------------------------------- */
+    :root:not(.dark) {
+      --panel-bg: rgba(255,255,255,.78);
+      --panel-bg-soft: rgba(255,255,255,.60);
+      --panel-border: rgba(15,23,42,.14);
+      --muted: rgba(15,23,42,.78);
+      --muted2: rgba(15,23,42,.62);
+      --text: #0f172a;
+    }
+
+    .panel {
+      background: var(--panel-bg);
+      border-color: var(--panel-border);
+    }
+    .panelSoft {
+      background: var(--panel-bg-soft);
+      border-color: var(--panel-border);
+    }
+    .txt { color: var(--text); }
+    .muted { color: var(--muted); }
+    .muted2 { color: var(--muted2); }
+  </style>
+
+  <script>
+    // Theme boot (avoid FOUC)
+    (function () {
+      const stored = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const theme = stored || (prefersDark ? "dark" : "light");
+      document.documentElement.classList.toggle("dark", theme === "dark");
+    })();
+  </script>
+</head>
+
+<body class="min-h-screen font-display bg-slate-950 text-slate-100 dark:bg-slate-950 dark:text-slate-100 bg-forest-radial">
+  <!-- Background -->
+  <div class="fixed inset-0 -z-10 bg-tribal opacity-60 dark:opacity-70"></div>
+  <div class="fixed inset-0 -z-10 noise"></div>
+
+  <!-- Top accent line -->
+  <div class="fixed top-0 left-0 right-0 z-50 h-[2px] bg-gradient-to-r from-transparent via-neon-400/70 to-transparent"></div>
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-40 backdrop-blur border-b border-white/5 dark:bg-slate-950/55 bg-white/70">
+    <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 items-center justify-between">
+        <a href="#home" class="group flex items-center gap-3">
+          <!-- LOGO LIVRE (sem caixinha) -->
+          <img id="brandLogo" src="assets/images/brand/GG3.png" alt="Logo" class="h-10 w-auto" />
+          <div class="leading-tight">
+            <div id="brandName" class="text-base font-semibold tracking-wide dark:text-slate-100 txt">GUARÁ GAMES</div>
+            <div id="brandTagline" class="text-xs dark:text-slate-300/80 muted2">Tradicionalmente Inovadora</div>
+          </div>
+        </a>
+
+        <div class="hidden md:flex items-center gap-6" id="navLinks"></div>
+
+        <div class="flex items-center gap-2">
+          <!-- Theme toggle -->
+           <!-- <button id="themeToggle"
+            class="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm border dark:border-white/10 border-slate-900/10 dark:bg-white/5 bg-white/50 hover:bg-white/70 dark:hover:bg-white/10 transition shadow-neon"
+            aria-label="Alternar tema (dark/light)">
+            <span id="themeIcon" aria-hidden="true">🌙</span>
+            <span class="hidden sm:inline" id="themeLabel">Dark</span>
+          </button> -->
+
+          <!-- Mobile menu button -->
+          <button id="menuBtn"
+            class="md:hidden inline-flex items-center justify-center rounded-xl px-3 py-2 border dark:border-white/10 border-slate-900/10 dark:bg-white/5 bg-white/50 hover:bg-white/70 dark:hover:bg-white/10 transition"
+            aria-label="Abrir menu">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile menu -->
+      <div id="mobileMenu" class="md:hidden hidden pb-4">
+        <div class="flex flex-col gap-2 pt-2" id="navLinksMobile"></div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main-sections">
+    <!-- HERO -->
+    <section id="home" class="relative">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-14">
+        <div class="grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <div class="inline-flex items-center gap-2 rounded-full border border-neon-400/30 bg-neon-500/10 px-4 py-2 text-sm text-neon-100 shadow-neon">
+              <span class="h-2 w-2 rounded-full bg-neon-400 animate-pulse"></span>
+              <span id="heroBadge">Bem-Vindo ao site oficial da Guará Games.</span>
+            </div>
+
+            <h1 id="heroTitle" class="mt-6 text-4xl sm:text-5xl font-semibold tracking-tight dark:text-slate-100 txt">
+              Criamos jogos <span class="text-neon-300">vivos</span>, cheios de
+              <span class="text-neon-300">dedicação</span> e
+              <span class="text-neon-300">divertidos</span>.
+            </h1>
+
+            <p id="heroText" class="mt-5 leading-relaxed max-w-xl dark:text-slate-200/80 muted">
+              "Criamos experiências imersivas e inesquecíveis para todas as plataformas, transformando cada jogo em uma jornada única. Nosso trabalho une narrativa, arte e tecnologia para construir mundos vivos e interativos, onde cada detalhe é pensado para envolver o jogador. Seja no PC, console ou mobile, buscamos entregar aventuras profundas que permanecem na memória. Somos movidos pela paixão de conectar pessoas através do entretenimento digital, entregando experiências que transcendem a tela."
+            </p>
+
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a id="heroCtaPrimary" href="#jogos"
+                 class="rounded-xl px-5 py-3 bg-neon-400/15 border border-neon-400/35 hover:bg-neon-400/20 transition shadow-neonStrong">
+                Ver nossos jogos
+              </a>
+              <a id="heroCtaSecondary" href="#contato"
+                 class="rounded-xl px-5 py-3 border dark:border-white/10 border-slate-900/10 dark:bg-white/5 bg-white/60 hover:bg-white/80 dark:hover:bg-white/10 transition">
+                Falar com o estúdio
+              </a>
+            </div>
+
+            <div class="mt-10 grid grid-cols-3 gap-3 max-w-lg" id="heroStats"></div>
+          </div>
+
+          <!-- Featured -->
+          <div class="relative">
+            <div class="absolute -inset-4 bg-gradient-to-tr from-neon-400/10 via-transparent to-neon-400/10 blur-2xl"></div>
+
+            <div class="relative rounded-3xl border border-white/10 dark:bg-white/5 panel overflow-hidden shadow-neon">
+              <div class="p-6 sm:p-8">
+                <div class="flex items-center justify-between">
+                  <div class="text-sm dark:text-slate-200/70 muted2" id="featuredLabel">Destaque</div>
+                  <div class="text-xs rounded-full px-3 py-1 border border-neon-400/30 bg-neon-500/10 text-neon-100" id="featuredChip">Novo trailer</div>
+                </div>
+
+                <h2 class="mt-2 text-2xl font-semibold dark:text-slate-100 txt" id="featuredTitle">NovaTech: Guará Games apresenta nova tecnologia!</h2>
+                <p class="mt-3 dark:text-slate-200/75 muted" id="featuredText">Apresentamos uma tecnologia 2D que simula um mundo tridimensional, abrindo possibilidades para o futuro.</p>
+
+                <div class="mt-6 aspect-video rounded-2xl border border-white/10 overflow-hidden relative">
+                  <!-- PERSONALIZÁVEL: capa do destaque -->
+                  <img id="featuredImage" src="assets/Images/vídeo/mostra3d.jpg" alt="Capa do destaque" class="absolute inset-0 w-full h-full object-cover" />
+                  <div class="absolute inset-0 bg-gradient-to-br from-slate-950/20 to-slate-950/75"></div>
+
+                  <div class="relative h-full w-full grid place-items-center">
+                    <button id="openTrailer" class="group inline-flex items-center gap-3 rounded-2xl px-5 py-3 border border-neon-400/35 bg-neon-400/10 hover:bg-neon-400/15 transition shadow-neonStrong">
+                      <span class="grid h-10 w-10 place-items-center rounded-xl bg-neon-400/15 border border-neon-400/30">▶</span>
+                      <span class="text-sm" id="featuredBtn">Assistir teaser</span>
+                      <span class="text-neon-200 opacity-70 group-hover:opacity-100 transition">↗</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="mt-6 flex flex-wrap gap-2" id="featuredTags"></div>
+              </div>
+
+              <div class="h-1 bg-gradient-to-r from-transparent via-neon-400/60 to-transparent"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE -->
+    <section id="sobre" class="relative py-16">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between gap-6 flex-wrap">
+          <div>
+            <p class="text-neon-300 text-sm tracking-wide" id="aboutKicker">SOBRE</p>
+            <h2 class="mt-2 text-3xl sm:text-4xl font-semibold dark:text-slate-100 txt" id="aboutTitle">NOSSA HISTÓRIA.</h2>
+            <p class="mt-4 max-w-2xl leading-relaxed dark:text-slate-200/75 muted" id="aboutText">
+              A história da Guará Games começou no ano de 1994, em um pequeno estúdio com grandes sonhos. Com criatividade, ousadia e dedicação, rapidamente nos destacamos no mercado ao lançar jogos que se tornaram ícones, conquistando prêmios e, principalmente, a fidelidade dos jogadores. Ao longo das décadas, acompanhamos as transformações da indústria sem nunca perder a essência que nos define: a busca por inovação aliada à paixão por contar histórias e proporcionar desafios inesquecíveis. Nossos títulos clássicos seguem vivos na memória dos fãs, enquanto novas produções surgem para dialogar com as tendências atuais e futuras do mundo dos games. Hoje, a Guará Games se reinventa, investindo em tecnologia de ponta, explorando o universo digital e fortalecendo sua presença global, sem abrir mão da tradição que nos trouxe até aqui. Somos uma empresa com passado memorável e futuro promissor.            </p>
+          </div>
+
+          <div class="flex gap-3">
+            <a id="aboutCta1" href="#novidades"
+               class="rounded-xl px-4 py-2 border border-neon-400/30 bg-neon-500/10 hover:bg-neon-500/15 transition shadow-neon text-sm">
+              Ver novidades
+            </a>
+            <a id="aboutCta2" href="#contato"
+               class="rounded-xl px-4 py-2 border dark:border-white/10 border-slate-900/10 dark:bg-white/5 bg-white/60 hover:bg-white/80 dark:hover:bg-white/10 transition text-sm">
+              Parcerias & mídia
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-10 grid lg:grid-cols-3 gap-6" id="aboutCards"></div>
+
+        <div class="mt-10 rounded-3xl border border-neon-400/20 bg-gradient-to-r from-neon-400/10 via-white/5 to-transparent p-6">
+          <div class="grid md:grid-cols-4 gap-4" id="aboutFacts"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOVIDADES (CARROSSEL) -->
+    <section id="novidades" class="relative py-16">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between gap-6 flex-wrap">
+          <div>
+            <p class="text-neon-300 text-sm tracking-wide" id="newsKicker">NOVIDADES</p>
+            <h2 class="mt-2 text-3xl sm:text-4xl font-semibold dark:text-slate-100 txt" id="newsTitle">Atualizações, eventos e devlogs</h2>
+            <p class="mt-4 max-w-2xl dark:text-slate-200/75 muted" id="newsText">Acompanhe lançamentos, bastidores e protótipos.</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button class="carouselPrev rounded-xl px-4 py-2 border dark:border-white/10 border-slate-900/10 dark:bg-white/5 bg-white/60 hover:bg-white/80 dark:hover:bg-white/10 transition" aria-label="Anterior">←</button>
+            <button class="carouselNext rounded-xl px-4 py-2 border dark:border-white/10 border-slate-900/10 dark:bg-white/5 bg-white/60 hover:bg-white/80 dark:hover:bg-white/10 transition" aria-label="Próximo">→</button>
+          </div>
+        </div>
+
+        <div class="mt-10 relative">
+          <div class="overflow-hidden rounded-3xl border border-white/10 dark:bg-white/5 panel shadow-neon">
+            <div id="carouselTrack" class="flex transition-transform duration-500 ease-out will-change-transform"></div>
+          </div>
+
+          <div id="carouselDots" class="mt-4 flex items-center justify-center gap-2"></div>
+          <p class="mt-3 text-center text-xs dark:text-slate-200/60 muted2">
+            Dica: use <span class="text-neon-200">←</span> e <span class="text-neon-200">→</span> no teclado.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOGOS -->
+    <section id="jogos" class="relative py-16">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between gap-6 flex-wrap">
+          <div>
+            <p class="text-neon-300 text-sm tracking-wide" id="gamesKicker">NOSSOS JOGOS</p>
+            <h2 class="mt-2 text-3xl sm:text-4xl font-semibold dark:text-slate-100 txt" id="gamesTitle">Mundos que respiram, histórias que ecoam</h2>
+            <p class="mt-4 max-w-2xl dark:text-slate-200/75 muted" id="gamesText">Clique em um jogo para abrir a página de detalhes.</p>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <input id="gamesSearch" type="search" placeholder="Buscar jogo..."
+              class="w-64 max-w-[70vw] rounded-xl px-4 py-2 border dark:border-white/10 border-slate-900/10 dark:bg-slate-950/40 bg-white/70 placeholder:text-slate-500/70 focus:border-neon-400/40" />
+            <button id="resetSearch"
+              class="rounded-xl px-4 py-2 border dark:border-white/10 border-slate-900/10 dark:bg-white/5 bg-white/60 hover:bg-white/80 dark:hover:bg-white/10 transition text-sm">
+              Limpar
+            </button>
+          </div>
+        </div>
+
+        <div id="gamesGrid" class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+        <div class="mt-10 rounded-3xl border border-neon-400/20 bg-gradient-to-r from-transparent via-neon-400/10 to-transparent p-6">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <div class="text-neon-200 font-semibold" id="gamesCtaTitle">Quer publicar com a gente?</div>
+              <div class="dark:text-slate-200/75 muted text-sm" id="gamesCtaText">Co-desenvolvimento, port, QA, otimização e UI/UX.</div>
+            </div>
+            <a id="gamesCtaBtn" href="#contato"
+               class="rounded-xl px-5 py-3 bg-neon-400/15 border border-neon-400/35 hover:bg-neon-400/20 transition shadow-neonStrong">
+              Falar sobre parceria
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALERIA -->
+    <section id="galeria" class="relative py-16">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div>
+          <p class="text-neon-300 text-sm tracking-wide" id="galleryKicker">GALERIA</p>
+          <h2 class="mt-2 text-3xl sm:text-4xl font-semibold dark:text-slate-100 txt" id="galleryTitle">Arte, ambientes e cenas</h2>
+          <p class="mt-4 max-w-2xl dark:text-slate-200/75 muted" id="galleryText">Clique em uma imagem para ampliar.</p>
+        </div>
+
+        <div id="galleryGrid" class="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+      </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato" class="relative py-16">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-10 items-start">
+          <div>
+            <p class="text-neon-300 text-sm tracking-wide" id="contactKicker">CONTATO</p>
+            <h2 class="mt-2 text-3xl sm:text-4xl font-semibold dark:text-slate-100 txt" id="contactTitle">Vamos criar algo inesquecível</h2>
+            <p class="mt-4 max-w-xl leading-relaxed dark:text-slate-200/75 muted" id="contactText">
+              Envie sua mensagem: imprensa, parcerias, freelas, distribuição ou apenas para dizer “oi”.
+              Respondemos o quanto antes.
+            </p>
+
+            <!-- Contatos principais -->
+            <div class="mt-8 space-y-3" id="contactCards"></div>
+
+            <!-- Redes sociais com ícones -->
+            <div class="mt-6">
+              <div class="text-sm font-semibold text-neon-200">Redes sociais</div>
+              <div class="mt-3 flex flex-wrap gap-3" id="socialLinks"></div>
+            </div>
+          </div>
+
+          <form id="contactForm" class="rounded-3xl border border-white/10 dark:bg-white/5 panel p-6 sm:p-8 shadow-neon">
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="text-sm dark:text-slate-200/75 muted" for="name">Nome</label>
+                <input id="name" name="name" required
+                  class="mt-2 w-full rounded-xl px-4 py-3 border dark:border-white/10 border-slate-900/10 dark:bg-slate-950/40 bg-white/70 focus:border-neon-400/40"
+                  placeholder="Seu nome" />
+              </div>
+
+              <div>
+                <label class="text-sm dark:text-slate-200/75 muted" for="email">E-mail</label>
+                <input id="email" name="email" type="email" required
+                  class="mt-2 w-full rounded-xl px-4 py-3 border dark:border-white/10 border-slate-900/10 dark:bg-slate-950/40 bg-white/70 focus:border-neon-400/40"
+                  placeholder="voce@email.com" />
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <label class="text-sm dark:text-slate-200/75 muted" for="subject">Assunto</label>
+              <input id="subject" name="subject" required
+                class="mt-2 w-full rounded-xl px-4 py-3 border dark:border-white/10 border-slate-900/10 dark:bg-slate-950/40 bg-white/70 focus:border-neon-400/40"
+                placeholder="Parceria, imprensa, feedback..." />
+            </div>
+
+            <div class="mt-4">
+              <label class="text-sm dark:text-slate-200/75 muted" for="message">Mensagem</label>
+              <textarea id="message" name="message" rows="5" required
+                class="mt-2 w-full rounded-xl px-4 py-3 border dark:border-white/10 border-slate-900/10 dark:bg-slate-950/40 bg-white/70 focus:border-neon-400/40"
+                placeholder="Conte um pouco sobre sua ideia..."></textarea>
+              <div class="mt-2 text-xs dark:text-slate-200/60 muted2" id="charCount">0/800</div>
+            </div>
+
+            <div class="mt-6 flex flex-wrap items-center gap-3">
+              <button type="submit"
+                class="rounded-xl px-6 py-3 bg-neon-400/15 border border-neon-400/35 hover:bg-neon-400/20 transition shadow-neonStrong">
+                Enviar mensagem
+              </button>
+              <button type="button" id="fillExample"
+                class="rounded-xl px-6 py-3 border dark:border-white/10 border-slate-900/10 dark:bg-white/5 bg-white/60 hover:bg-white/80 dark:hover:bg-white/10 transition">
+                Preencher exemplo
+              </button>
+              <span class="text-xs dark:text-slate-200/60 muted2" id="contactFootnote">* Validação local (sem backend)</span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/5 py-10">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="text-sm dark:text-slate-200/70 muted2">
+          © <span id="year"></span> <span id="footerBrand">Guará Games</span> — Todos os direitos reservados.
+        </div>
+        <div class="flex items-center gap-4 text-sm" id="footerLinks"></div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- GAME PAGE (Route) -->
+  <section id="gamePage" class="hidden">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10">
+      <div class="flex items-center justify-between gap-4 flex-wrap">
+        <button id="backHome"
+          class="rounded-xl px-4 py-2 border dark:border-white/10 border-slate-900/10 dark:bg-white/5 bg-white/60 hover:bg-white/80 dark:hover:bg-white/10 transition">
+          ← Voltar
+        </button>
+
+        <div class="flex items-center gap-2">
+          <span class="text-xs px-3 py-1 rounded-full border border-neon-400/30 bg-neon-500/10 text-neon-100" id="gameTag">Jogo</span>
+          <span class="text-xs dark:text-slate-200/60 muted2" id="gameMeta">—</span>
+        </div>
+      </div>
+
+      <div class="mt-6 rounded-3xl border border-white/10 dark:bg-white/5 panel overflow-hidden shadow-neon">
+        <div class="relative">
+          <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(21,255,152,.18),transparent_60%)]"></div>
+
+          <div class="p-6 sm:p-8 relative">
+            <h1 class="text-3xl sm:text-4xl font-semibold dark:text-slate-100 txt" id="gameTitle">Título</h1>
+            <p class="mt-3 dark:text-slate-200/75 muted max-w-3xl" id="gameDesc">Descrição do jogo...</p>
+
+            <div class="mt-6 flex flex-wrap gap-2" id="gameChips"></div>
+
+            <div class="mt-8 grid lg:grid-cols-2 gap-6 items-start">
+              <div class="rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 aspect-video overflow-hidden relative" id="gameHeroWrap">
+                <img id="gameHeroImg" alt="Imagem do jogo" class="absolute inset-0 w-full h-full object-cover opacity-95" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+              </div>
+
+              <div class="space-y-4">
+                <div class="rounded-2xl border border-white/10 dark:bg-white/5 panelSoft p-4">
+                  <div class="text-xs dark:text-slate-200/70 muted2">Destaques</div>
+                  <ul class="mt-2 text-sm dark:text-slate-200/80 muted list-disc list-inside" id="gameFeatures"></ul>
+                </div>
+
+                <div class="rounded-2xl border border-white/10 dark:bg-white/5 panelSoft p-4">
+                  <div class="text-xs dark:text-slate-200/70 muted2">Links</div>
+                  <div class="mt-3 flex flex-wrap gap-3" id="gameLinks"></div>
+                  <p class="mt-3 text-xs dark:text-slate-200/60 muted2">* Trailers podem abrir no modal (sem limite).</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-10">
+              <div class="flex items-end justify-between gap-4 flex-wrap">
+                <div>
+                  <h2 class="text-2xl font-semibold dark:text-slate-100 txt">Screenshots</h2>
+                  <p class="dark:text-slate-200/70 muted2 text-sm">Clique para ampliar.</p>
+                </div>
+              </div>
+              <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4" id="gameShots"></div>
+            </div>
+          </div>
+
+          <div class="h-1 bg-gradient-to-r from-transparent via-neon-400/60 to-transparent"></div>
+        </div>
+      </div>
+
+      <div class="mt-6 text-xs dark:text-slate-200/60 muted2">
+        URL desta página: <span class="text-neon-200" id="routeHint">#game/...</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+    <div class="relative mx-auto max-w-5xl h-full px-4 sm:px-6 lg:px-8 grid place-items-center">
+      <div class="w-full">
+        <div class="flex justify-between items-center mb-3">
+          <div class="text-sm text-slate-200/80" id="lightboxCaption">Imagem</div>
+          <button id="closeLightbox"
+            class="rounded-xl px-4 py-2 border border-white/10 bg-white/5 hover:border-neon-400/35 hover:bg-white/10 transition">
+            Fechar ✕
+          </button>
+        </div>
+        <img id="lightboxImg" alt="Imagem ampliada" class="w-full max-h-[75vh] object-contain rounded-2xl border border-white/10 bg-slate-950/40 shadow-neon" />
+        <div class="mt-3 flex gap-2 justify-center">
+          <button id="prevLightbox" class="rounded-xl px-4 py-2 border border-white/10 bg-white/5 hover:border-neon-400/35 hover:bg-white/10 transition" aria-label="Anterior">←</button>
+          <button id="nextLightbox" class="rounded-xl px-4 py-2 border border-white/10 bg-white/5 hover:border-neon-400/35 hover:bg-white/10 transition" aria-label="Próximo">→</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRAILER MODAL -->
+  <div id="trailerModal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/75 backdrop-blur-sm"></div>
+    <div class="relative mx-auto max-w-4xl h-full px-4 sm:px-6 lg:px-8 grid place-items-center">
+      <div class="w-full rounded-3xl border border-white/10 bg-slate-950/70 overflow-hidden shadow-neon">
+        <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
+          <div class="text-sm text-slate-200/80" id="trailerTitle">Trailer</div>
+          <button id="closeTrailer" class="rounded-xl px-4 py-2 border border-white/10 bg-white/5 hover:border-neon-400/35 hover:bg-white/10 transition">
+            Fechar ✕
+          </button>
+        </div>
+
+        <div id="trailerContainer" class="aspect-video bg-gradient-to-br from-slate-900 to-slate-950 relative overflow-hidden"></div>
+
+        <div class="px-5 py-4 text-xs text-slate-200/60">
+          Dica: pressione <span class="text-neon-200">ESC</span> para fechar.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden">
+    <div class="rounded-2xl border border-neon-400/35 bg-slate-950/70 backdrop-blur px-5 py-3 shadow-neonStrong">
+      <div class="text-sm text-slate-100" id="toastText">Mensagem</div>
+      <div class="mt-1 h-1 rounded-full bg-white/10 overflow-hidden">
+        <div id="toastBar" class="h-full w-full bg-neon-400/70 origin-left scale-x-0"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================
+       CONFIG — PERSONALIZE AQUI
+       - Jogos: CONFIG.games.items (qualquer quantidade)
+       - Trailers: CONFIG.trailers (qualquer quantidade)
+       - Para vincular trailers a um jogo: game.trailerIds = ["id1","id2"]
+       - O botão do destaque abre CONFIG.hero.featuredTrailerId
+    ========================================================== */
+    const CONFIG = {
+      brand: {
+        name: "GUARÁ GAMES",
+        tagline: "Tradicionalmente Inovadora",
+        logo: "assets/images/brand/GG3.png",
+        logoFallback: "assets/images/brand/GG2.png",
+        nav: [
+          { label: "Sobre", href: "#sobre" },
+          { label: "Novidades", href: "#novidades" },
+          { label: "Nossos jogos", href: "#jogos" },
+          { label: "Galeria", href: "#galeria" },
+          { label: "Contato", href: "#contato" },
+        ],
+        footerLinks: [
+          { label: "Topo", href: "#home" },
+          { label: "Contato", href: "#contato" },
+          { label: "Jogos", href: "#jogos" },
+        ],
+      },
+
+      hero: {
+        badge: "Bem-Vindo ao site oficial da Guará Games",
+        titleHtml: `Criamos jogos <span class="text-neon-300">vivos</span>, cheios de
+                    <span class="text-neon-300">dedicação</span> e
+                    <span class="text-neon-300">divertidos</span>.`,
+        text: "Criamos experiências imersivas e inesquecíveis para todas as plataformas, transformando cada jogo em uma jornada única. Nosso trabalho une narrativa, arte e tecnologia para construir mundos vivos e interativos, onde cada detalhe é pensado para envolver o jogador. Seja no PC, console ou mobile, buscamos entregar aventuras profundas que permanecem na memória. Somos movidos pela paixão de conectar pessoas através do entretenimento digital, entregando experiências que transcendem a tela.",
+        ctaPrimary: { label: "Ver nossos jogos", href: "#jogos" },
+        ctaSecondary: { label: "Falar com o estúdio", href: "#contato" },
+        stats: [
+          { value: "+15", label: "Projetos entregues" },
+          { value: "14", label: "Prêmios recebidos" },
+          { value: "24/7", label: "Comunidade ativa" },
+        ],
+        featured: {
+          label: "Destaque",
+          chip: "Novo trailer",
+          title: "NovaTech: Guará Games apresenta nova tecnologia!",
+          text: "Apresentamos uma tecnologia 2D que simula um mundo tridimensional, abrindo possibilidades para o futuro.",
+          image: "assets/Images/vídeo/mostra3d.jpg",
+          button: "Assistir teaser",
+          tags: ["Tecnologia", "MostraTech", "Inovação", "PC"]
+        },
+        featuredTrailerId: "2DTech" // abre no modal
+        
+      },
+
+      about: {
+        kicker: "SOBRE",
+        title: "NOSSA HISTÓRIA",
+        text: "A história da Guará Games começou no ano de 1994, em um pequeno estúdio com grandes sonhos. Com criatividade, ousadia e dedicação, rapidamente nos destacamos no mercado ao lançar jogos que se tornaram ícones, conquistando prêmios e, principalmente, a fidelidade dos jogadores. Ao longo das décadas, acompanhamos as transformações da indústria sem nunca perder a essência que nos define: a busca por inovação aliada à paixão por contar histórias e proporcionar desafios inesquecíveis. Nossos títulos clássicos seguem vivos na memória dos fãs, enquanto novas produções surgem para dialogar com as tendências atuais e futuras do mundo dos games. Hoje, a Guará Games se reinventa, investindo em tecnologia de ponta, explorando o universo digital e fortalecendo sua presença global, sem abrir mão da tradição que nos trouxe até aqui. Somos uma empresa com passado memorável e futuro promissor.",
+        ctas: [
+          { label: "Ver novidades", href: "#novidades" },
+          { label: "Parcerias & mídia", href: "#contato" }
+        ],
+        cards: [
+          { title: "Missão", text: "Sempre modernizar nossa marca, investindo em novas tecnologias e criando experiências que unem a nostalgia dos clássicos, o carinho tradicional e a inovação da nova era dos games." },
+          { title: "Processo", text: "Damos a cada projeto o tempo e recursos necessários para atingir sua completude e o que queremos passar com eles." },
+          { title: "Equipe", text: "Desenvolvedores, artistas e criadores apaixonados por games. Além dos parceiros da Nubankojima Studios e da Nintendomel." },
+        ],
+        facts: [
+          { label: "Foco", value: "Experiências completas e criativas" },
+          { label: "Gêneros", value: "Aventura • RPG • Esportes e Outros" },
+          { label: "Plataformas", value: "PC • Console • Mobile" },
+          { label: "HQ", value: "Avenida Eminem, 021, Mar de Fevereiro — Aurorion " },
+        ]
+      },
+
+      news: {
+        kicker: "NOVIDADES",
+        title: "Últimas notícias",
+        text: "Fique por dentro das novidades, anúncios oficiais e projetos futuros por aqui.",
+        slides: [
+          {
+            eyebrow: "Premiação",
+            title: "MELHOR EMPRESA GAMER",
+            text: "Conquistamos o prêmio de melhor empresa na esfera de jogos pela quinta vez no renomado Oscar de Aurorion. Isso não seria possível sem vocês e seguiremos trabalhando duro. Obrigado!",
+            chips: ["Campeões", "Penta", "Oscar"],
+            image: "assets/Images/games/Ocar5x.jpg",
+            noteTitle: "Agradecemos aos fãs!",
+            noteText: "Somos a maior vencedora do prêmio de Melhor Empresa Gamer"
+          },
+          {
+            eyebrow: "Evento • Lançamento",
+            title: "BETA CAPIÍTULO 2",
+            text: "O segundo capítulo da história de Vitor 'Caramel' chegou, focando nas dificuldades de estar em um lugar que não parece feito para você. Como você lidará com isso? Jogue já e faça suas escolhas!",
+            chips: ["Lançamento", "Capítulo 2", "Dísponivel nas lojas"],
+            image: "assets/Images/games/BETA2.jpg",
+            badge: "Inscrições limitadas",
+            noteTitle: "Destaque",
+            noteText: "Este capítulo é duas vezes maior que o primeiro e terá mais foco no desenvolvimento de personagem"
+          },
+          {
+            eyebrow: "Em breve • Novidades",
+            title: "Polosmon: Doomsday",
+            text: "O novo título da franquia em parceria com a Nintendomel anteriormente anunciado trará aspectos inéditos a franquia. Será um novo jeito de ver Polosmon!",
+            chips: ["Novidade", "Em produção", "RPG"],
+            image: "assets/Images/games/PolosmonDoom1.jpg",
+            noteTitle: "NOVA FÓRMULA",
+            noteText: "Jogo terá sistema RPG e estilo mais sério, dentro de narrativa envolvente!"
+          }
+        ]
+      },
+
+      /* Trailers ilimitados:
+         type: "embed" (YouTube/Vimeo) ou "mp4" (local)
+         src:
+           - embed: url do embed (ex.: https://www.youtube.com/embed/ID?autoplay=1)
+           - mp4: caminho do arquivo local
+      */
+    trailers: [
+    {
+      id: "2DTech",
+      title: "Mostra de Tecnologia - Simulação de 3D",
+      type: "embed", 
+      src: 'https://www.youtube.com/watch?v=WaTgG9tDcAk',
+      poster: "assets/Images/vídeo/mostra3d.jpg"
+    }
+        // exemplo embed:
+        // {
+        //   id: "t-youtube-demo",
+        //   title: "Trailer no YouTube",
+        //   type: "embed",
+        //   src: "https://www.youtube.com/embed/?autoplay=1&mute=0"
+        // }
+      ],
+
+      /* Jogos ilimitados:
+         - Para adicionar jogo: crie novo objeto abaixo
+         - Para remover: apague o objeto
+         - trailerIds: lista de IDs de trailers (você pode ter 0, 1 ou N trailers)
+      */
+      games: {
+        kicker: "NOSSOS JOGOS",
+        title: "Mundos que respiram, histórias que ecoam",
+        text: "Clique em um jogo para abrir a página de detalhes.",
+        ctaTitle: "Quer publicar com a gente?",
+        ctaText: "Co-desenvolvimento, port, QA, otimização e UI/UX.",
+        ctaBtn: "Falar sobre parceria",
+        items: [
+          {
+            slug: "Nubancharted",
+            name: "Nubancharted: Em Busca das Dinossauras",
+            year: 2007,
+            genre: "Ação e Aventura",
+            platforms: ["Moguistation 3, Nubanksbox 360"],
+            tag: "Lançado",
+            hero: "assets/Images/games/Nubancharted1.jpg",
+            shots: [
+              "assets/Images/brand/GG1.png",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: "Nubanko e sua tropa vão desbravar as matas amazônicas em busca de descobrir a cidade perdida dos dinossauros. Ele e seus amigos, no entanto, se depararão com uma força misteriosa.",
+            chips: ["Exploração", "Mundo Detalhado", "Aventura", "Narrativa"],
+            features: ["Recriação rica da Floresta Amazônica", "História épica de ação", "Trilha dinâmica", "Design de fases revolucionário"],
+            store: "#",
+            trailerIds: ["2DTech"] // pode ter vários
+          },
+          {
+            slug: "Nubancharted2",
+            name: "Nubancharted 2: Rumo a Angola",
+            year: 2009,
+            genre: "Ação e Aventura",
+            platforms: ["Moguistation 3, Nubanksbox 360"],
+            tag: "Lançado",
+            hero: "assets/images/games/Nubancharted2.jpg",
+            shots: [
+              "assets/images/GG1.png",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: "A aventura continua, dessa vez no berço do mundo, na África, em Angola. Quando Dio ameaça extinguir a negritude, Nubanko vai encará-lo de frente pra tentar frustrar os planos de Dio, afinal, não da pra ser racista sem negros no mundo!",
+            chips: ["Exploração", "Mundo Detalhado", "Aventura", "Narrativa"],
+            features: ["Biomas reativos com clima procedural", "Combate de armas aprimorado", "Continuação épica da saga de Nubank Drake", "Adição do Modo foto"],
+            store: "#",
+            trailerIds: ["t-verde-teaser"] // pode ter vários
+          },
+          {
+            slug: "Nubancharted3",
+            name: "Nubancharted 3: A queda de Goiás",
+            year: 2011,
+            genre: "Ação e Aventura",
+            platforms: ["Moguistation 3, Nubanksbox 360"],
+            tag: "Lançado",
+            hero: "assets/images/games/Nubancharted3.jpg",
+            shots: [
+              "assets/images/GG1.png",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: "A aventura continua, dessa vez no berço do mundo, na África, em Angola. Quando Dio ameaça extinguir a negritude, Nubanko vai encará-lo de frente pra tentar frustrar os planos de Dio, afinal, não da pra ser racista sem negros no mundo!",
+            chips: ["Exploração", "Mundo Detalhado", "Aventura", "Narrativa"],
+            features: ["Sistema inovador de simulação de água", "Combate de armas aprimorado", "Continuação épica da saga de Nubank Drake", "Adição do Modo foto"],
+            store: "#",
+            trailerIds: ["t-verde-teaser"] // pode ter vários
+          },
+          {
+            slug: "Nubancharted-LNDC",
+            name: "Nubancharted: Legacy of Nubank Drake Collection",
+            year: 2015,
+            genre: "Ação e Aventura",
+            platforms: ["PC, Moguistation 4, Nubanksbox One, Nintendomel Suíte"],
+            tag: "Lançado",
+            hero: "assets/images/games/Nubancharted-LNDC/Nubancharted-LNDC.jpg",
+            shots: [
+              "assets/images/games/Nubancharted-LNDC/Nubancharted-LNDC-shot1.jpg",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: "Os três jogos da amada trilogia de jogos de ação e aventura Nubancharted ganharam versões remasterizadas para a geração de consoles de 2013. Espera...Consoles? Isso mesmo que você ouviu! Agora todos podem usufruir das histórias e gameplays icônicas da franquia em qualquer plataforma devido ao acordo judicial entre Nubanksbox e Moguistation algum tempo atrás.Com gráficos e texturas melhorados, gameplay polida e adaptada pra atender os jogadores com mais conforto e mantendo toda a estrutura original, você está pronto pra se divertir?",
+            chips: ["Exploração", "Mundo Detalhado", "Aventura", "Narrativa"],
+            features: ["Gráficos e texturas aprimoradas", "Combate geral aprimorado", "Coleção da trilogia de Nubank Drake", "Polimento da gameplay para controles modernos"],
+            store: "#",
+            trailerIds: ["t-verde-teaser"] // pode ter vários
+          },
+          {
+            slug: "CallOfCaraduty",
+            name: "Call of Caraduty",
+            year: 2006,
+            genre: "Ação e FPS",
+            platforms: ["PC, Moguistation 3, Nubanksbox 360, Nintendomel Wii"],
+            tag: "Lançado",
+            hero: "assets/images/games/COC1.jpg",
+            shots: [
+              "assets/images/games/",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: " Surgiu junto da geração vigente em 2006, a edição original do aclamado Call of Caraduty apresenta um cenário em meio a conferência do Equador, luta, garra, raízes, cultura e muita emoção. Uma gameplay inovadora e uma história impactante. Descubra o que vem em meio às explosões, peixeiras e gatilhos.",
+            chips: ["Ação", "Explosões", "FPS", "Online"],
+            features: ["Gráficos realistas", "Armas realistas", "Cenário de Guerra", "Modo História e Online"],
+            store: "#",
+            trailerIds: ["t-verde-teaser"] // pode ter vários
+          },
+          {
+            slug: "CallOfCaradutyRemaster",
+            name: "Call of Caraduty: Remasterizado",
+            year: 2014,
+            genre: "Ação e FPS",
+            platforms: ["PC, Moguistation 4, Nubanksbox One, Nintendomel Wii U / Suíte"],
+            tag: "Lançado",
+            hero: "assets/images/games/COC1remaster.jpg",
+            shots: [
+              "assets/images/games/",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: "Após o sucesso que foi o lançamento original, decidimos relançar o jogo com mais qualidade e a mesma diversão! Entre em meio a conferência do Equador,salve seus companheiros e lute pela independência.",
+            chips: ["Ação", "Explosões", "FPS", "Online"],
+            features: ["Gráficos realistas", "Armas realistas", "Cenário de Guerra", "Modo História e Online"],
+            store: "#",
+            trailerIds: ["t-verde-teaser"] // pode ter vários
+          },
+          {
+            slug: "CODBO",
+            name: "Call of Caraduty: Black Ops I",
+            year: 2016,
+            genre: "Ação e FPS",
+            platforms: ["PC", "Nubanksbox Um", "Moguistation 4", "Nintendomel Suíte"],
+            tag: "Lançado",
+            hero: "assets/Images/games/CODBO.jpg",
+            shots: [
+              "assets/images/games/",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: "A paz não dura pra sempre... Hitler ascende novamente revivido em sua armadura high-tech em busca de concluir o terceiro Reich. Encarne um soldado que vai ser meter mais a fundo do que imaginou nessa história e derrube o neonazismo e o comunismo!",
+            chips: ["Guerra", "Aventura", "Explosão"],
+            features: ["Gráficos aprimorados", "História original", "Cadência de armas"],
+            store: "#",
+            trailerIds: ["t-verde-teaser"] // pode ter vários
+          },
+          {
+            slug: "AndreSF",
+            name: "André Street Fighter",
+            year: 2009,
+            genre: "Luta",
+            platforms: ["PC, Moguistation 3, Nubanksbox 360, Nintendomel Wii"],
+            tag: "Lançado",
+            hero: "assets/images/games/AndreSF.jpg",
+            shots: [
+              "assets/images/games/",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: "Tá na hora de cair no pau com os carismáticos e poderosos personagens! Siga uma jornada de vingança cheia de emoção, combos e ação.",
+            chips: ["Combate", "Luta de Rua", "Multiplayer", "História"],
+            features: ["Personagens carismáticos originais", "Controles precisos", "Combos diversos", "Modo História, Duelo e Online"],
+            store: "#",
+            trailerIds: ["t-verde-teaser"] // pode ter vários
+          },
+          {
+            slug: "FzRas",
+            name: "Forza Rasano",
+            year: 2008,
+            genre: "Corrida",
+            platforms: ["Nubanksbox 360"],
+            tag: "Lançado",
+            hero: "assets/Images/games/FzRas.jpg",
+            shots: [
+              "assets/images/games/",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: "Corra com seus amigos pelas ruas das cidades mais importantes de Aurorion! Aproveite uma gameplay realista e se divirta com os rachas pelas cidades do Mar de Fevereiro e Saint Paulli!",
+            chips: ["Corrida", "Semiaberto", "Velocidade"],
+            features: ["Condução realista", "Carros licenciados", "Gráficos incríveis", "Sensação de velocidade"],
+            store: "#",
+            trailerIds: ["t-verde-teaser"] // pode ter vários
+          },
+
+          {
+            slug: "CPFS",
+            name: "Celso Portiolli: Flight Simulator",
+            year: 2017,
+            genre: "Simulador",
+          platforms: ["PC", "Nubanksbox Um", "Moguistation 4", "Nintendomel Suíte", "PC"],
+            tag: "Lançado",
+            hero: "assets/Images/games/CPFS.jpg",
+            shots: [
+              "assets/images/games/",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: "O ano é 2042. O Brasil está dividido em territórios controlados por grandes emissoras de TV.O SBT tornou-se a última resistência da diversão leve, memes eternos e auditórios coloridos.A Globo, transformada em um império corporativo obscuro, domina os céus com drones de propaganda e caças invisíveis.O Ratinho, agora um cientista maluco, criou ratonaves experimentais e busca controlar a audiência global.Silvio Santos, misterioso e quase imortal, desapareceu em 2030. Seu paradeiro é o maior segredo da televisão.O único herói capaz de salvar o SBT e encontrar Silvio é Celso Portiolli, que recebe de Carlos Alberto de Nóbrega um avião lendário: O Aeromeme 2000, movido a aplausos e risadas de plateia.",
+            chips: ["Realista", "Aviação", "Briga de emissoras"],
+            features: ["Simulador realista", "Multiplataforma", "Mapa brasileiro"],
+            store: "#",
+            trailerIds: ["t-verde-teaser"] // pode ter vários
+          },
+
+          {
+            slug: "LNBA",
+            name: "LNBA2K",
+            year: 2017,
+            genre: "Esporte",
+            platforms: ["PC", "Nubanksbox Um", "Moguistation 4", "Nintendomel Suíte"],
+            tag: "Lançado",
+            hero: "assets/Images/games/LNBA2K.jpg",
+            shots: [
+              "assets/images/games/",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: "As suas equipes favoritas, os maiores craques do mundo, o melhor do basquete reunido aqui para você jogar com os amigos ou sozinho.",
+            chips: ["Times licenciados", "Captura de Movimento", "Online"],
+            features: ["Modo carreira", "Partida rápida", "Personalização avançada", "Edição Especial"],
+            store: "#",
+            trailerIds: ["t-verde-teaser"] // pode ter vários
+          },
+          {
+            slug: "LNBA25",
+            name: "LNBA2K25",
+            year: 2022,
+            genre: "Esporte",
+          platforms: ["PC", "Prol One", "Nubanksbox Um", "Moguistation 5", "Nintendomel Suíte"],
+            tag: "Lançado",
+            hero: "assets/Images/games/LNBA2K25.jpg",
+            shots: [
+              "assets/images/games/",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: "A Nova versão do aclamado LNBA2K apresenta refinamento de gameplay: mais precisão, interação e realismo nas partidas que são agora mais disputadas e emocionantes do que nunca!",
+            chips: ["Times licenciados da NBA e LNBA", "Animações realistas", "Online"],
+            features: ["Modo carreira mais completo", "Modo Guerra de Mascotes", "Mundo semiaberto", "Novas habilidades"],
+            store: "#",
+            trailerIds: ["t-verde-teaser"] // pode ter vários
+          },
+          {
+            slug: "POLOGO",
+            name: "POLOSMON: GO",
+            year: 2016,
+            genre: "Aventura",
+            platforms: ["Mobile"],
+            tag: "Lançado",
+            hero: "assets/Images/games/POLOGO.png",
+            shots: [
+              "assets/images/games/",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: " Polosmon GO trará vida aos seus bichinhos poderosos favoritos em uma gameplay interativa, vibrante e multiplayer! O primeiro jogo mobile da Guará Games em parceria com a Nintendomel",
+            chips: ["Realidade misturada", "Evolução", "Online"],
+            features: ["Captura de Polosmons", "Utiliza recursos do celular", "Atualizações constantes"],
+            store: "#",
+            trailerIds: ["t-verde-teaser"] // pode ter vários
+          },
+          {
+            slug: "KRL",
+            name: "Marvel's KRL",
+            year: 2019,
+            genre: "Ação e História",
+            platforms: ["Moguistation 4"],
+            tag: "Lançado",
+            hero: "assets/Images/games/KRL.jpg",
+            shots: [
+              "assets/images/games/",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: "Entre na pele do homem mais poderoso do universo, acompanhe sua história e decida o seu lado: o bem ou o mal! Em um jogo de ação e decisão, sinta na pele o conflito da responsabilidade de ter o maior poder conhecido em mãos: farme aura e salve inocentes ou coloque o mundo na palma da sua mão!",
+            chips: ["Mundo Aberto", "Efeitos Especiais", "Sensação de poder"],
+            features: ["Combate incrível", "Mundo detalhado e enorme", "História de alta escala"],
+            store: "#",
+            trailerIds: ["t-verde-teaser"] // pode ter vários
+          },
+          {
+            slug: "MeMo",
+            name: "Metal Moguiar",
+            year: 2026,
+            genre: "RPG de ação",
+            platforms: ["Nubanksbox"],
+            tag: "Lançado",
+            hero: "assets/Images/games/MetMog.png",
+            shots: [
+              "assets/images/games/",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: "Ano 2050. O Brasil vive um período de caos político após a ascensão do Lula Petista - um socialista taxador que, após fundir sua essência com um molusco mutante da Amazônia, agora governa com tentáculos de pura burocracia biológica.Seu plano é transformar todas as cidades brasileiras em fábricas do PT para dominar a América do Sul",
+            chips: ["Ficção Histórica", "Inovador", "História envolvente"],
+            features: ["Épico", "Tech", "Mundo aberto"],
+            store: "#",
+            trailerIds: ["t-verde-teaser"] // pode ter vários
+          },
+          {
+            slug: "MeMo2",
+            name: "Metal Moguiar 2",
+            year: 2027,
+            genre: "RPG de ação e Sandbox",
+            platforms: ["Nubanksbox"],
+            tag: "Lançado",
+            hero: "assets/Images/games/MetMog2.png",
+            shots: [
+              "assets/images/games/",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: "A paz no Bostil não durou muito, no ano de 2053, vindos do espaço, os aliens da raça Polos invadiram a terra, com suas cabeças avantajadas e camisas coloradas eles queriam dominar a terra e roubar o pequi cósmico para aumentar as suas forças. A mente por trás de tal plano? Era o grande 'POLOS INIMIGO DE TODOS' um ser vivo cabeçudo e torcedor do internacional (vulgo menor do RS) que tinha o poder da energia da inimizade.",
+            chips: ["Sequência deslumbrante", "Alto nível de detalhes"],
+            features: ["Mundo aberto expandido", "História épica", "Variedade de veículos e gameplay"],
+            store: "#",
+            trailerIds: ["t-verde-teaser"] // pode ter vários
+          },
+          {
+            slug: "Memoz",
+            name: "Memorizando",
+            year: 2031,
+            genre: "Puzzle",
+            platforms: ["PC e Mobile"],
+            tag: "Lançado",
+            hero: "assets/Images/games/Memorizando.jpg",
+            shots: [
+              "assets/images/games/",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: "Coleção de jogos da memória para você se desafiar e se divertir com seus temas preferidos!",
+            chips: ["Coleção", "Temático", "Para pensar"],
+            features: ["Múltiplos temas", "Multiplataforma", "Para todos os públicos"],
+            store: "#",
+            trailerIds: ["t-verde-teaser"] // pode ter vários
+          },
+          {
+            slug: "MVS",
+            name: "Morte Vida Severina",
+            year: 1000,
+            genre: "-",
+            platforms: ["-"],
+            tag: "Não Lançado",
+            hero: "assets/Images/games/MVS.jpg",
+            shots: [
+              "assets/images/games/",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: "",
+            chips: ["-", "-", "-"],
+            features: ["-", "-", "-"],
+            store: "#",
+            trailerIds: ["t-verde-teaser"] // pode ter vários
+          },
+          {
+            slug: "CD",
+            name: "Caradoom",
+            year: 1000,
+            genre: "-",
+            platforms: ["-"],
+            tag: "Não lançado",
+            hero: "assets/Images/games/.jpg",
+            shots: [
+              "assets/images/games/",
+              "assets/images/games/verde-codigo/shot-2.jpg",
+              "assets/images/games/verde-codigo/shot-3.jpg"
+            ],
+            desc: "",
+            chips: ["-", "-", "-"],
+            features: ["-", "-", "-"],
+            store: "#",
+            trailerIds: ["2DTech"] // pode ter vários
+          },
+          // Adicione quantos jogos quiser aqui...
+        ]
+      },
+
+      gallery: {
+        kicker: "GALERIA",
+        title: "NOSSOS PRÊMIOS",
+        text: "Veja os prêmios que conquistamos no Ocar ao longo dos anos. Agradecemos a cada um dos nossos fãs, sem vocês isso não seria possível. Continuaremos trabalhando para surpreendê-los, emocioná-los e divertí-los!",
+        items: [
+          { title: "Melhor empresa 2025", img: "assets/Images/premios/MP25.jpg" },
+          { title: "Melhor empresa 2027", img: "assets/Images/premios/MP27.jpg" },
+          { title: "Melhor empresa 2028", img: "assets/Images/premios/MP28.jpg" },
+          { title: "Melhor empresa 2029", img: "assets/Images/premios/MP29.jpg" },
+          { title: "Melhor empresa 2030", img: "assets/Images/premios/MP30.jpg" },
+          { title: "Melhor jogo 2026", img: "assets/Images/premios/MJ26.jpg" },
+          { title: "Melhor jogo 2027", img: "assets/Images/premios/MJ27.jpg" },
+          { title: "Melhor jogo 2029", img: "assets/Images/premios/MJ29.jpg" },
+          { title: "Melhor jogo 2030", img: "assets/Images/premios/MJ30.jpg" },
+          { title: "Melhor capa 2028", img: "assets/Images/premios/MC28.jpg" },
+          { title: "Melhor capa 2029", img: "assets/Images/premios/MC29.jpg" },
+          { title: "Melhor capa 2030", img: "assets/Images/premios/MC30.jpg" },
+          { title: "Melhor história 2030", img: "assets/Images/premios/MH30.jpg" },
+          { title: "Melhor personagem 2030", img: "assets/Images/premios/MPS30.jpg" },
+        ]
+      },
+
+      contact: {
+        kicker: "CONTATO",
+        title: "Vamos criar algo inesquecível",
+        text: "Envie sua mensagem: imprensa, parcerias, freelas, distribuição ou apenas para dizer “oi”. Respondemos o quanto antes.",
+        footnote: "* Validação local (sem backend).",
+        cards: [
+          { label: "E-mail", value: "suporte@guaragames.com" },
+          { label: "Telefone", value: "+55 (22) 94002-8922" },
+          { label: "Endereço", value: "Avenida Eminem, 021, Mar de Fevereiro — Aurorion" }
+        ],
+        socials: [
+          { kind: "instagram", label: "Instagram", href: "https://instagram.com/guaragames" },
+          { kind: "twitter",   label: "X (Twitter)", href: "https://x.com/guaragames" },
+          { kind: "youtube",   label: "YouTube", href: "https://www.youtube.com/@MathMBR" },
+          { kind: "discord",   label: "Discord", href: "https://discord.com/invite/senuj7HW" }
+        ]
+      }
+    };
+
+    /* =========================================================
+       UTIL
+    ========================================================== */
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+    function esc(str) {
+      return String(str).replace(/[&<>"']/g, s => ({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+      }[s]));
+    }
+
+    function toast(text, isError=false) {
+      const toastEl = $("#toast");
+      const toastText = $("#toastText");
+      const toastBar = $("#toastBar");
+      toastText.textContent = text;
+      toastEl.classList.remove("hidden");
+      toastEl.querySelector("div").classList.toggle("border-rose-400/35", isError);
+      toastEl.querySelector("div").classList.toggle("border-neon-400/35", !isError);
+      toastBar.classList.toggle("bg-rose-400/70", isError);
+      toastBar.classList.toggle("bg-neon-400/70", !isError);
+
+      toastBar.style.transition = "none";
+      toastBar.style.transform = "scaleX(0)";
+      requestAnimationFrame(() => {
+        toastBar.style.transition = "transform 2400ms linear";
+        toastBar.style.transform = "scaleX(1)";
+      });
+
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => toastEl.classList.add("hidden"), 2500);
+    }
+
+    function findTrailerById(id) {
+      return CONFIG.trailers.find(t => t.id === id);
+
+      
+    }
+
+    function iconSvg(kind) {
+      const base = `class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true"`;
+      switch (kind) {
+        case "instagram":
+          return `<svg ${base}>
+            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Z" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M17.5 6.5h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          </svg>`;
+        case "twitter":
+          return `<svg ${base}>
+            <path d="M18.5 3.5 13.9 8.1m4.6-4.6H15.7m2.8 0v2.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5 20.5l6.9-7.6L5.6 3.5H10l3.6 5.3L18 3.5h1L14.6 9l4.8 11.5h-4.1l-3.3-6.7L8 20.5H5Z" fill="currentColor" opacity=".85"/>
+          </svg>`;
+        case "youtube":
+          return `<svg ${base}>
+            <path d="M21 8.2a3 3 0 0 0-2.1-2.1C17 5.5 12 5.5 12 5.5s-5 0-6.9.6A3 3 0 0 0 3 8.2 31.2 31.2 0 0 0 3 12s0 2.8.6 3.8a3 3 0 0 0 2.1 2.1c1.9.6 6.9.6 6.9.6s5 0 6.9-.6a3 3 0 0 0 2.1-2.1c.6-1 .6-3.8.6-3.8s0-2.8-.6-3.8Z" stroke="currentColor" stroke-width="1.8" fill="none"/>
+            <path d="M10.5 9.5 15 12l-4.5 2.5V9.5Z" fill="currentColor"/>
+          </svg>`;
+        case "discord":
+          return `<svg ${base}>
+            <path d="M8.2 7.2c1.1-.8 2.4-1.2 3.8-1.2s2.7.4 3.8 1.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M7 17.5c.9.7 2.1 1.1 3.3 1.1l.4-1.2m6.3.1.4 1.2c1.2 0 2.4-.4 3.3-1.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M6.5 8.2c-1.2 2.1-1.8 4.4-1.8 6.8 0 0 1.7 1.7 5.6 2.2.5-1.1.7-1.6.7-1.6M17 15.6s.2.5.7 1.6c3.9-.5 5.6-2.2 5.6-2.2 0-2.4-.6-4.7-1.8-6.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M9.4 13.2h.01M14.6 13.2h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          </svg>`;
+        default:
+          return `<svg ${base}><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/></svg>`;
+      }
+    }
+
+    /* =========================================================
+       THEME
+    ========================================================== */
+    /*const themeToggle = $("#themeToggle");
+    const themeIcon = $("#themeIcon") 
+    const themeLabel = $("#themeLabel");
+
+    function syncThemeUI() {
+      const isDark = document.documentElement.classList.contains("dark");
+      themeIcon.textContent = isDark ? "🌙" : "☀️";
+      themeLabel.textContent = isDark ? "Dark" : "Light";
+
+      // Better base contrast for light mode
+      document.body.classList.toggle("bg-slate-950", isDark);
+      document.body.classList.toggle("text-slate-100", isDark);
+      document.body.classList.toggle("bg-slate-50", !isDark);
+      document.body.classList.toggle("text-slate-900", !isDark);
+      document.body.style.backgroundColor = isDark ? "" : "#f8fafc";
+    }
+    syncThemeUI();
+
+    themeToggle.addEventListener("click", () => {
+      const isDark = document.documentElement.classList.toggle("dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+      syncThemeUI();
+      toast(`Tema: ${isDark ? "Dark" : "Light"} ✅`);
+    });
+
+    /* =========================================================
+       RENDER: NAV + FOOTER + HERO + ABOUT + CONTACT
+    ========================================================== */
+    function renderNav() {
+      $("#brandName").textContent = CONFIG.brand.name;
+      $("#brandTagline").textContent = CONFIG.brand.tagline;
+
+      const logo = $("#brandLogo");
+      logo.src = CONFIG.brand.logo;
+      logo.onerror = () => logo.src = CONFIG.brand.logoFallback;
+
+      const navWrap = $("#navLinks");
+      const navMobile = $("#navLinksMobile");
+      navWrap.innerHTML = "";
+      navMobile.innerHTML = "";
+
+      CONFIG.brand.nav.forEach(item => {
+        const a = document.createElement("a");
+        a.className = "navlink text-sm dark:text-slate-200/80 muted hover:text-neon-200 transition";
+        a.href = item.href;
+        a.textContent = item.label;
+        navWrap.appendChild(a);
+
+        const m = document.createElement("a");
+        m.href = item.href;
+        m.className = "rounded-xl px-3 py-2 text-sm border dark:border-white/10 border-slate-900/10 dark:bg-white/5 bg-white/60 hover:bg-white/80 dark:hover:bg-white/10 transition";
+        m.textContent = item.label;
+        navMobile.appendChild(m);
+      });
+
+      $("#footerBrand").textContent = CONFIG.brand.name;
+      const footerLinks = $("#footerLinks");
+      footerLinks.innerHTML = "";
+      CONFIG.brand.footerLinks.forEach(item => {
+        const a = document.createElement("a");
+        a.href = item.href;
+        a.className = "dark:text-slate-200/70 muted2 hover:text-neon-200 transition";
+        a.textContent = item.label;
+        footerLinks.appendChild(a);
+      });
+    }
+
+    function renderHero() {
+      $("#heroBadge").textContent = CONFIG.hero.badge;
+      $("#heroTitle").innerHTML = CONFIG.hero.titleHtml;
+      $("#heroText").textContent = CONFIG.hero.text;
+
+      $("#heroCtaPrimary").textContent = CONFIG.hero.ctaPrimary.label;
+      $("#heroCtaPrimary").href = CONFIG.hero.ctaPrimary.href;
+      $("#heroCtaSecondary").textContent = CONFIG.hero.ctaSecondary.label;
+      $("#heroCtaSecondary").href = CONFIG.hero.ctaSecondary.href;
+
+      const statsWrap = $("#heroStats");
+      statsWrap.innerHTML = "";
+      CONFIG.hero.stats.forEach(s => {
+        const d = document.createElement("div");
+        d.className = "rounded-2xl border border-white/10 dark:bg-white/5 panelSoft p-4";
+        d.innerHTML = `<div class="text-neon-300 font-semibold">${esc(s.value)}</div>
+                       <div class="text-xs dark:text-slate-200/70 muted2">${esc(s.label)}</div>`;
+        statsWrap.appendChild(d);
+      });
+
+      $("#featuredLabel").textContent = CONFIG.hero.featured.label;
+      $("#featuredChip").textContent = CONFIG.hero.featured.chip;
+      $("#featuredTitle").textContent = CONFIG.hero.featured.title;
+      $("#featuredText").textContent = CONFIG.hero.featured.text;
+      $("#featuredImage").src = CONFIG.hero.featured.image;
+      $("#featuredBtn").textContent = CONFIG.hero.featured.button;
+
+      const tagsWrap = $("#featuredTags");
+      tagsWrap.innerHTML = "";
+      CONFIG.hero.featured.tags.forEach(t => {
+        const chip = document.createElement("span");
+        chip.className = "text-xs px-3 py-1 rounded-full border border-white/10 dark:bg-white/5 panelSoft";
+        chip.textContent = t;
+        tagsWrap.appendChild(chip);
+      });
+    }
+
+    function renderAbout() {
+      $("#aboutKicker").textContent = CONFIG.about.kicker;
+      $("#aboutTitle").textContent = CONFIG.about.title;
+      $("#aboutText").textContent = CONFIG.about.text;
+
+      $("#aboutCta1").textContent = CONFIG.about.ctas[0]?.label || "Ver novidades";
+      $("#aboutCta1").href = CONFIG.about.ctas[0]?.href || "#novidades";
+      $("#aboutCta2").textContent = CONFIG.about.ctas[1]?.label || "Contato";
+      $("#aboutCta2").href = CONFIG.about.ctas[1]?.href || "#contato";
+
+      const cardsWrap = $("#aboutCards");
+      cardsWrap.innerHTML = "";
+      CONFIG.about.cards.forEach(c => {
+        const d = document.createElement("div");
+        d.className = "rounded-3xl border border-white/10 dark:bg-white/5 panel p-6 shadow-neon";
+        d.innerHTML = `<div class="text-neon-300 font-semibold">${esc(c.title)}</div>
+                       <p class="mt-2 dark:text-slate-200/75 muted">${esc(c.text)}</p>`;
+        cardsWrap.appendChild(d);
+      });
+
+      const factsWrap = $("#aboutFacts");
+      factsWrap.innerHTML = "";
+      CONFIG.about.facts.forEach(f => {
+        const d = document.createElement("div");
+        d.className = "rounded-2xl border border-white/10 dark:bg-white/5 panelSoft p-4";
+        d.innerHTML = `<div class="text-sm dark:text-slate-200/70 muted2">${esc(f.label)}</div>
+                       <div class="mt-1 font-semibold text-neon-200">${esc(f.value)}</div>`;
+        factsWrap.appendChild(d);
+      });
+    }
+
+    function renderContact() {
+      $("#contactKicker").textContent = CONFIG.contact.kicker;
+      $("#contactTitle").textContent = CONFIG.contact.title;
+      $("#contactText").textContent = CONFIG.contact.text;
+      $("#contactFootnote").textContent = CONFIG.contact.footnote;
+
+      const cards = $("#contactCards");
+      cards.innerHTML = "";
+      CONFIG.contact.cards.forEach(c => {
+        const d = document.createElement("div");
+        d.className = "rounded-2xl border border-white/10 dark:bg-white/5 panelSoft p-4";
+        d.innerHTML = `<div class="text-xs dark:text-slate-200/70 muted2">${esc(c.label)}</div>
+                       <div class="font-semibold text-neon-200">${esc(c.value)}</div>`;
+        cards.appendChild(d);
+      });
+
+      const socials = $("#socialLinks");
+      socials.innerHTML = "";
+      CONFIG.contact.socials.forEach(s => {
+        const a = document.createElement("a");
+        a.href = s.href;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.className = "inline-flex items-center gap-2 rounded-xl px-4 py-2 border border-white/10 dark:bg-white/5 panelSoft hover:border-neon-400/35 hover:bg-white/80 dark:hover:bg-white/10 transition shadow-neon";
+        a.setAttribute("aria-label", s.label);
+        a.innerHTML = `
+          <span class="text-neon-200">${iconSvg(s.kind)}</span>
+          <span class="text-sm dark:text-slate-200/80 muted">${esc(s.label)}</span>
+        `;
+        socials.appendChild(a);
+      });
+    }
+
+    /* =========================================================
+       NEWS (Carousel)
+    ========================================================== */
+    const track = $("#carouselTrack");
+    const dotsWrap = $("#carouselDots");
+    const prevBtn = $(".carouselPrev");
+    const nextBtn = $(".carouselNext");
+    let newsIndex = 0, autoTimer = null;
+    let startX = null, dx = 0;
+
+    function renderNews() {
+      $("#newsKicker").textContent = CONFIG.news.kicker;
+      $("#newsTitle").textContent = CONFIG.news.title;
+      $("#newsText").textContent = CONFIG.news.text;
+
+      track.innerHTML = "";
+      CONFIG.news.slides.forEach(sl => {
+        const article = document.createElement("article");
+        article.className = "carouselSlide min-w-full p-6 sm:p-8";
+
+        const chipsHtml = (sl.chips || []).map(c => {
+          const wip = c.toLowerCase() === "wip";
+          return `<span class="text-xs px-3 py-1 rounded-full border ${wip ? 'border-neon-400/30 bg-neon-500/10 text-neon-100' : 'border-white/10 dark:bg-white/5 panelSoft'}">${esc(c)}</span>`;
+        }).join("");
+
+        article.innerHTML = `
+          <div class="grid lg:grid-cols-2 gap-8 items-center">
+            <div>
+              <div class="text-xs dark:text-slate-200/70 muted2">${esc(sl.eyebrow)}</div>
+              <h3 class="mt-2 text-2xl font-semibold dark:text-slate-100 txt">${esc(sl.title)}</h3>
+              <p class="mt-3 dark:text-slate-200/75 muted">${esc(sl.text)}</p>
+              <div class="mt-5 flex gap-2 flex-wrap">${chipsHtml}</div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 aspect-video overflow-hidden relative dark:bg-white/5 panel">
+              <img src="${esc(sl.image)}" alt="${esc(sl.title)}" class="absolute inset-0 w-full h-full object-cover opacity-95" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent"></div>
+
+              ${sl.badge ? `<div class="absolute top-4 left-4 rounded-xl border border-neon-400/25 bg-neon-500/10 px-3 py-1 text-xs text-neon-100">${esc(sl.badge)}</div>` : ""}
+
+              <div class="absolute bottom-4 left-4 right-4 rounded-xl border border-white/10 bg-slate-950/50 backdrop-blur px-4 py-3">
+                <div class="text-sm font-semibold text-neon-200">${esc(sl.noteTitle || "Preview")}</div>
+                <div class="text-xs text-slate-200/80">${esc(sl.noteText || "")}</div>
+              </div>
+            </div>
+          </div>
+        `;
+        track.appendChild(article);
+      });
+
+      renderDots();
+      goToNews(0);
+      startAuto();
+    }
+
+    function slides() { return $$(".carouselSlide"); }
+
+    function renderDots() {
+      dotsWrap.innerHTML = "";
+      slides().forEach((_, i) => {
+        const b = document.createElement("button");
+        b.className = "h-2.5 w-2.5 rounded-full border border-white/20 " +
+          (i === newsIndex ? "bg-neon-400/70 border-neon-400/50 shadow-neon" : "bg-white/10 hover:bg-white/20");
+        b.setAttribute("aria-label", `Ir para slide ${i + 1}`);
+        b.addEventListener("click", () => goToNews(i, true));
+        dotsWrap.appendChild(b);
+      });
+    }
+
+    function goToNews(i, userAction=false) {
+      const total = slides().length || 1;
+      newsIndex = (i + total) % total;
+      track.style.transform = `translateX(-${newsIndex * 100}%)`;
+      renderDots();
+      if (userAction) restartAuto();
+    }
+    function nextNews() { goToNews(newsIndex + 1); }
+    function prevNews() { goToNews(newsIndex - 1); }
+
+    function startAuto() { stopAuto(); autoTimer = setInterval(nextNews, 5500); }
+    function stopAuto() { if (autoTimer) clearInterval(autoTimer); autoTimer = null; }
+    function restartAuto() { stopAuto(); startAuto(); }
+
+    prevBtn?.addEventListener("click", () => prevNews());
+    nextBtn?.addEventListener("click", () => nextNews());
+
+    track?.addEventListener("pointerdown", (e) => { startX = e.clientX; dx = 0; stopAuto(); });
+    track?.addEventListener("pointermove", (e) => { if (startX != null) dx = e.clientX - startX; });
+    track?.addEventListener("pointerup", () => {
+      if (startX == null) return;
+      if (Math.abs(dx) > 40) (dx < 0 ? nextNews() : prevNews());
+      startX = null; dx = 0; startAuto();
+    });
+
+    $("#novidades")?.addEventListener("mouseenter", stopAuto);
+    $("#novidades")?.addEventListener("mouseleave", startAuto);
+
+    /* =========================================================
+       GAMES + SEARCH + ROUTING
+    ========================================================== */
+    const gamesGrid = $("#gamesGrid");
+    const gamesSearch = $("#gamesSearch");
+    const resetSearch = $("#resetSearch");
+
+    function renderGamesSectionText() {
+      $("#gamesKicker").textContent = CONFIG.games.kicker;
+      $("#gamesTitle").textContent = CONFIG.games.title;
+      $("#gamesText").textContent = CONFIG.games.text;
+      $("#gamesCtaTitle").textContent = CONFIG.games.ctaTitle;
+      $("#gamesCtaText").textContent = CONFIG.games.ctaText;
+      $("#gamesCtaBtn").textContent = CONFIG.games.ctaBtn;
+    }
+
+    function gameCard(game) {
+      const a = document.createElement("a");
+      a.href = `#game/${game.slug}`;
+      a.className = `
+        group relative rounded-3xl border border-white/10 dark:bg-white/5 panel overflow-hidden shadow-neon
+        hover:border-neon-400/35 hover:bg-white/80 dark:hover:bg-white/10 transition
+        focus:outline-none
+      `;
+
+      a.innerHTML = `
+        <div class="relative">
+          <img src="${esc(game.hero)}" alt="${esc(game.name)}" class="w-full aspect-video object-cover opacity-95 group-hover:opacity-100 transition" />
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent"></div>
+          <div class="absolute top-4 left-4 text-xs rounded-full px-3 py-1 border border-neon-400/25 bg-neon-500/10 text-neon-100">${esc(game.tag)}</div>
+          <div class="absolute bottom-4 left-4 right-4">
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <div class="text-lg font-semibold leading-tight dark:text-slate-100 txt">${esc(game.name)}</div>
+                <div class="text-xs dark:text-slate-200/70 muted2 mt-1">${esc(game.year)} • ${esc(game.genre)} • ${esc(game.platforms.join(" • "))}</div>
+              </div>
+              <div class="h-10 w-10 grid place-items-center rounded-xl bg-neon-400/10 border border-neon-400/25 text-neon-200 group-hover:bg-neon-400/15 transition">↗</div>
+            </div>
+          </div>
+        </div>
+      `;
+      return a;
+    }
+
+    function renderGames(list) {
+      gamesGrid.innerHTML = "";
+      list.forEach(g => gamesGrid.appendChild(gameCard(g)));
+      if (list.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "rounded-3xl border border-white/10 dark:bg-white/5 panel p-6 dark:text-slate-200/75 muted";
+        empty.textContent = "Nenhum jogo encontrado. Tente outra busca.";
+        gamesGrid.appendChild(empty);
+      }
+    }
+
+    function filterGames(q) {
+      q = (q || "").trim().toLowerCase();
+      if (!q) return CONFIG.games.items;
+      return CONFIG.games.items.filter(g =>
+        g.name.toLowerCase().includes(q) ||
+        String(g.year).includes(q) ||
+        g.genre.toLowerCase().includes(q) ||
+        g.platforms.join(" ").toLowerCase().includes(q) ||
+        g.tag.toLowerCase().includes(q)
+      );
+    }
+
+    gamesSearch?.addEventListener("input", (e) => renderGames(filterGames(e.target.value)));
+    resetSearch?.addEventListener("click", () => {
+      gamesSearch.value = "";
+      renderGames(CONFIG.games.items);
+      gamesSearch.focus();
+    });
+
+    /* =========================================================
+       GALLERY + LIGHTBOX
+    ========================================================== */
+    const galleryGrid = $("#galleryGrid");
+    const lightbox = $("#lightbox");
+    const lightboxImg = $("#lightboxImg");
+    const lightboxCaption = $("#lightboxCaption");
+
+    let lightboxIndex = 0;
+    let lightboxList = [];
+
+    function renderGallery() {
+      $("#galleryKicker").textContent = CONFIG.gallery.kicker;
+      $("#galleryTitle").textContent = CONFIG.gallery.title;
+      $("#galleryText").textContent = CONFIG.gallery.text;
+
+      galleryGrid.innerHTML = "";
+      CONFIG.gallery.items.forEach((it, i) => {
+        const btn = document.createElement("button");
+        btn.className = `
+          group relative rounded-2xl overflow-hidden border border-white/10 dark:bg-white/5 panel
+          hover:border-neon-400/35 transition shadow-neon focus:outline-none
+        `;
+        btn.innerHTML = `
+          <img src="${esc(it.img)}" alt="${esc(it.title)}" class="w-full aspect-square object-cover opacity-95 group-hover:opacity-100 transition" />
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+          <div class="absolute bottom-3 left-3 right-3 text-xs text-slate-100/90 flex items-center justify-between gap-2">
+            <span class="truncate">${esc(it.title)}</span>
+            <span class="text-neon-200">⤢</span>
+          </div>
+        `;
+        btn.addEventListener("click", () => openLightbox(CONFIG.gallery.items, i));
+        galleryGrid.appendChild(btn);
+      });
+    }
+
+    function openLightbox(list, i) {
+      lightboxList = list;
+      lightboxIndex = i;
+      lightboxImg.src = list[i].img;
+      lightboxCaption.textContent = list[i].title;
+      lightbox.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+    }
+    function closeLightbox() {
+      lightbox.classList.add("hidden");
+      document.body.style.overflow = "";
+    }
+    function lbNext() {
+      lightboxIndex = (lightboxIndex + 1) % lightboxList.length;
+      lightboxImg.src = lightboxList[lightboxIndex].img;
+      lightboxCaption.textContent = lightboxList[lightboxIndex].title;
+    }
+    function lbPrev() {
+      lightboxIndex = (lightboxIndex - 1 + lightboxList.length) % lightboxList.length;
+      lightboxImg.src = lightboxList[lightboxIndex].img;
+      lightboxCaption.textContent = lightboxList[lightboxIndex].title;
+    }
+
+    $("#closeLightbox")?.addEventListener("click", closeLightbox);
+    $("#prevLightbox")?.addEventListener("click", lbPrev);
+    $("#nextLightbox")?.addEventListener("click", lbNext);
+
+    lightbox?.addEventListener("click", (e) => {
+      if (e.target === lightbox.querySelector(".absolute")) closeLightbox();
+    });
+
+    /* =========================================================
+       GAME PAGE ROUTE
+    ========================================================== */
+    const gamePage = $("#gamePage");
+    const backHomeBtn = $("#backHome");
+
+    function setRoute(mode) {
+      document.body.classList.toggle("route-game", mode === "game");
+      document.body.classList.toggle("route-home", mode !== "game");
+      gamePage.classList.toggle("hidden", mode !== "game");
+    }
+
+    function renderGame(slug) {
+      const g = CONFIG.games.items.find(x => x.slug === slug);
+      if (!g) {
+        toast("Jogo não encontrado. Voltando…", true);
+        location.hash = "#jogos";
+        setRoute("home");
+        return;
+      }
+
+      setRoute("game");
+      $("#gameTitle").textContent = g.name;
+      $("#gameDesc").textContent = g.desc;
+      $("#gameMeta").textContent = `${g.year} • ${g.genre} • ${g.platforms.join(" • ")}`;
+      $("#gameTag").textContent = g.tag;
+      $("#routeHint").textContent = `#game/${g.slug}`;
+      $("#gameHeroImg").src = g.hero;
+
+      const chipsWrap = $("#gameChips");
+      chipsWrap.innerHTML = "";
+      (g.chips || []).forEach(c => {
+        const s = document.createElement("span");
+        s.className = "text-xs px-3 py-1 rounded-full border border-white/10 dark:bg-white/5 panelSoft";
+        s.textContent = c;
+        chipsWrap.appendChild(s);
+      });
+
+      const features = $("#gameFeatures");
+      features.innerHTML = "";
+      (g.features || []).forEach(f => {
+        const li = document.createElement("li");
+        li.textContent = f;
+        features.appendChild(li);
+      });
+
+      // Links: store + N trailers
+      const links = $("#gameLinks");
+      links.innerHTML = "";
+
+      // Store
+      if (g.store && g.store !== "#") {
+        const storeA = document.createElement("a");
+        storeA.href = g.store;
+        storeA.target = "_blank";
+        storeA.rel = "noopener noreferrer";
+        storeA.className = "rounded-xl px-4 py-2 border dark:border-white/10 border-slate-900/10 dark:bg-white/5 bg-white/60 hover:bg-white/80 dark:hover:bg-white/10 transition";
+        storeA.textContent = "Página na loja";
+        links.appendChild(storeA);
+      }
+
+      // Trailers (quantos quiser)
+      (g.trailerIds || []).forEach(id => {
+        const t = findTrailerById(id);
+        if (!t) return;
+
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "rounded-xl px-4 py-2 border border-neon-400/35 bg-neon-400/10 hover:bg-neon-400/15 transition shadow-neonStrong";
+        b.textContent = t.title || "Assistir trailer";
+        b.addEventListener("click", () => openTrailerModal(id));
+        links.appendChild(b);
+      });
+
+      // Screenshots
+      const shots = $("#gameShots");
+      shots.innerHTML = "";
+      const shotList = (g.shots || []).map((img, i) => ({ title: `${g.name} — screenshot ${i+1}`, img }));
+      shotList.forEach((it, i) => {
+        const b = document.createElement("button");
+        b.className = "rounded-2xl border border-white/10 dark:bg-white/5 panel overflow-hidden hover:border-neon-400/35 transition shadow-neon";
+        b.innerHTML = `<img src="${esc(it.img)}" alt="${esc(it.title)}" class="w-full aspect-video object-cover" />`;
+        b.addEventListener("click", () => openLightbox(shotList, i));
+        shots.appendChild(b);
+      });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function route() {
+      const hash = location.hash || "#home";
+      if (hash.startsWith("#game/")) {
+        renderGame(hash.replace("#game/", "").trim());
+      } else {
+        setRoute("home");
+      }
+    }
+
+    window.addEventListener("hashchange", route);
+
+    backHomeBtn?.addEventListener("click", () => {
+      setRoute("home");
+      history.pushState(null, "", "#jogos");
+      const y = $("#jogos").offsetTop - 80;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    });
+
+    /* =========================================================
+       TRAILER MODAL (N trailers, aberto por ID)
+    ========================================================== */
+    const trailerModal = $("#trailerModal");
+    const trailerContainer = $("#trailerContainer");
+
+    function renderTrailer(trailer) {
+      trailerContainer.innerHTML = "";
+      if (!trailer) {
+        trailerContainer.innerHTML = `<div class="absolute inset-0 grid place-items-center text-slate-200/80 p-6">Trailer não encontrado.</div>`;
+        return;
+      }
+
+      $("#trailerTitle").textContent = trailer.title || "Trailer";
+
+      if (trailer.type === "embed") {
+        const iframe = document.createElement("iframe");
+        iframe.src = trailer.src;
+        iframe.className = "absolute inset-0 w-full h-full";
+        iframe.allow = "autoplay; encrypted-media; picture-in-picture";
+        iframe.allowFullscreen = true;
+        iframe.title = trailer.title || "Trailer";
+        trailerContainer.appendChild(iframe);
+        return;
+      }
+
+      // default mp4
+      const video = document.createElement("video");
+      video.src = trailer.src;
+      video.poster = trailer.poster || "";
+      video.controls = true;
+      video.autoplay = true;
+      video.playsInline = true;
+      video.className = "absolute inset-0 w-full h-full object-cover";
+      trailerContainer.appendChild(video);
+    }
+
+    function openTrailerModal(trailerId) {
+      const t = findTrailerById(trailerId);
+      renderTrailer(t);
+      trailerModal.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeTrailerModal() {
+      trailerModal.classList.add("hidden");
+      document.body.style.overflow = "";
+      trailerContainer.innerHTML = ""; // para parar vídeo/iframe
+    }
+
+    // HERO featured trailer
+    $("#openTrailer")?.addEventListener("click", () => openTrailerModal(CONFIG.hero.featuredTrailerId));
+
+    $("#closeTrailer")?.addEventListener("click", closeTrailerModal);
+    trailerModal?.addEventListener("click", (e) => {
+      if (e.target === trailerModal.querySelector(".absolute")) closeTrailerModal();
+    });
+
+    /* =========================================================
+       CONTACT FORM (validação local)
+    ========================================================== */
+    const msg = $("#message");
+    const charCount = $("#charCount");
+
+    msg?.addEventListener("input", () => {
+      const val = msg.value.slice(0, 800);
+      if (msg.value !== val) msg.value = val;
+      charCount.textContent = `${val.length}/800`;
+    });
+
+    $("#fillExample")?.addEventListener("click", () => {
+      $("#name").value = "Seu Nome";
+      $("#email").value = "voce@email.com";
+      $("#subject").value = "Proposta de parceria / mídia";
+      msg.value = "Olá! Gostaria de conversar sobre uma possível parceria. Tenho uma ideia/projeto e queria entender como podemos colaborar.";
+      msg.dispatchEvent(new Event("input"));
+      toast("Exemplo preenchido ✍️");
+    });
+
+    $("#contactForm")?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = $("#name").value.trim();
+      const email = $("#email").value.trim();
+      const subject = $("#subject").value.trim();
+      const message = msg.value.trim();
+
+      if (!name || !email || !subject || !message) return toast("Preencha todos os campos.", true);
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return toast("E-mail inválido.", true);
+
+      toast("Mensagem enviada! ✅");
+      e.target.reset();
+      msg.dispatchEvent(new Event("input"));
+    });
+
+    /* =========================================================
+       MOBILE MENU + KEYBOARD
+    ========================================================== */
+    $("#menuBtn")?.addEventListener("click", () => $("#mobileMenu").classList.toggle("hidden"));
+    $("#mobileMenu")?.addEventListener("click", (e) => {
+      if (e.target.tagName.toLowerCase() === "a") $("#mobileMenu").classList.add("hidden");
+    });
+
+    window.addEventListener("keydown", (e) => {
+      const tag = document.activeElement?.tagName?.toLowerCase();
+      if (tag === "input" || tag === "textarea") return;
+      if (e.key === "ArrowLeft") prevNews();
+      if (e.key === "ArrowRight") nextNews();
+      if (e.key === "Escape") { closeLightbox(); closeTrailerModal(); }
+    });
+
+    /* =========================================================
+       INIT
+    ========================================================== */
+    function init() {
+      renderNav();
+      renderHero();
+      renderAbout();
+      renderNews();
+
+      renderGamesSectionText();
+      renderGames(CONFIG.games.items);
+
+      renderGallery();
+      renderContact();
+
+      $("#year").textContent = new Date().getFullYear();
+
+      // First route
+      route();
+    }
+
+    init();
+  </script>
+</body>
+</html>
